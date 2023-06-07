@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    // Apply the application plugin
+    id 'application'
 }
 
 repositories {
@@ -14,4 +16,36 @@ dependencies {
     implementation 'org.hibernate:hibernate-entitymanager:5.6.4.Final'
 
     implementation 'org.postgresql:postgresql:42.6.0'
+
+    // Set the main class for the application
+    mainClassName = 'Main'
+
+    // Define the JAR task
+    jar {
+        // Include dependencies in the JAR file
+        from {
+            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+        // Set the manifest attributes
+        manifest {
+            attributes 'Main-Class': mainClassName
+        }
+    }
+
+    // Custom task to set the main class
+    task setMainClass {
+        doLast {
+            sourceSets.main.java.srcDirs.each { dir ->
+                fileTree(dir).matching {
+                    include '**/Main.java'
+                }.forEach { file ->
+                    String content = file.getText('UTF-8')
+                    content = content.replace('public class Main', 'public class Main implements Runnable')
+                    file.write(content, 'UTF-8')
+                }
+            }
+        }
+    }
+    // Set the task dependency
+    jar.dependsOn setMainClass
 }
