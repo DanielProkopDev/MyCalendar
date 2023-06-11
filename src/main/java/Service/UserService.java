@@ -50,7 +50,7 @@ public class UserService implements UserRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (userName.isEmpty() || email.isEmpty() || password.length > 0) {
+        } else if (userName.isEmpty() || email.isEmpty() || password.length == 0) {
             return false;
         } else {
             return false;
