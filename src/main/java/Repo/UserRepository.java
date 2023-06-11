@@ -22,7 +22,7 @@ public interface UserRepository {
 
     public boolean updateEmail(int userId, String newEmail);
 
-    public boolean updatePassword(int userId, String newPassword);
+    public boolean updatePassword(int userId, char[] newPassword);
 
     public boolean updateDoB(int userId, LocalDate newDoB);
 
