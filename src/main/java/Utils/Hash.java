@@ -13,8 +13,8 @@ public class Hash {
     private static final int KEY_LENGTH = 512;
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
 
-    public  Optional<String> hashPassword(String password, Optional<String> salt){
-        char[] chars = password.toCharArray();
+    public  Optional<char[]> hashPassword(char[] password, Optional<String> salt){
+        char[] chars = password;
         byte[] bytes = salt.get().getBytes();
 
         PBEKeySpec spec = new PBEKeySpec(chars,bytes,ITERATIONS,KEY_LENGTH);
@@ -24,7 +24,7 @@ public class Hash {
         try{
             SecretKeyFactory fac = SecretKeyFactory.getInstance(ALGORITHM);
             byte[] securePassword = fac.generateSecret(spec).getEncoded();
-            return Optional.of(Base64.getEncoder().encodeToString(securePassword));
+            return Optional.of(Base64.getEncoder().encodeToString(securePassword).toCharArray());
         }catch(NoSuchAlgorithmException | InvalidKeySpecException ex){
             System.err.println("Exception encountered in hashPassword(");
             return Optional.empty();

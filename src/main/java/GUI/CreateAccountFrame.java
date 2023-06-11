@@ -31,10 +31,10 @@ public class CreateAccountFrame extends JFrame {
         JTextField confirmEmailTextField = new JTextField(20);
 
         JLabel passwordLabel = new JLabel("Password:");
-        JTextField passwordTextField = new JTextField(20);
+        JTextField passwordTextField = new JPasswordField(20);
 
         JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
-        JTextField confirmPasswordTextField = new JTextField(20);
+        JTextField confirmPasswordTextField = new JPasswordField(20);
 
         JLabel dobLabel = new JLabel("Date of Birth(yyyy-mm-dd):");
         JTextField dobTextField = new JTextField(20);
@@ -44,7 +44,7 @@ public class CreateAccountFrame extends JFrame {
         submitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (userService.createUser(usernameTextField.getText(),emailTextField.getText(),confirmEmailTextField.getText(),passwordTextField.getText(),confirmPasswordTextField.getText(),dobTextField.getText())) {
+                if (userService.createUser(usernameTextField.getText(),emailTextField.getText(),confirmEmailTextField.getText(),passwordTextField.getText().toCharArray(),confirmPasswordTextField.getText().toCharArray(),dobTextField.getText())) {
                     JOptionPane.showMessageDialog(CreateAccountFrame.this,"Account Created");
                 }else {
                     JOptionPane.showMessageDialog(CreateAccountFrame.this,"Password or Email isn't confirmed");

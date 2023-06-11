@@ -28,7 +28,7 @@ public class UserService implements UserRepository {
 
 
 
-    public boolean createUser(String userName, String email, String confirmEmail, String password, String confirmPassword, String dob) {
+    public boolean createUser(String userName, String email, String confirmEmail, char[] password, char[] confirmPassword, String dob) {
         if (email.equals(confirmEmail) && password.equals(confirmPassword)) {
             try (Session session = sessionFactory.openSession()) {
                 Transaction transaction = session.beginTransaction();
@@ -36,7 +36,7 @@ public class UserService implements UserRepository {
                 User user = new User();
                 //salt hash password
                 Optional<String> salt = saltHash.generateSalt(100);
-                Optional<String> securePassword = hash.hashPassword(password,salt);
+                Optional<char[]> securePassword = hash.hashPassword(password,salt);
                 // Set user properties
                 user.setUserName(userName);
                 user.setEmail(email);
@@ -50,7 +50,7 @@ public class UserService implements UserRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (userName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        } else if (userName.isEmpty() || email.isEmpty() || password.length > 0) {
             return false;
         } else {
             return false;
@@ -121,7 +121,7 @@ public class UserService implements UserRepository {
         return false;
     }
 
-    public boolean updatePassword(int userId, String newPassword) {
+    public boolean updatePassword(int userId, char[] newPassword) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
 

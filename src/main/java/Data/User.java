@@ -26,7 +26,7 @@ public class User extends AbstractEntity {
     private String email;
 
     @Column(name = "password")
-    private String password;
+    private char[] password;
 
     @Column(name = "dob")
     private LocalDate doB;
@@ -136,11 +136,11 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

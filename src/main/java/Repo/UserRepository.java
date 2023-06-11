@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-    public boolean createUser(String userName, String email, String confirmEmail, String password, String confirmPassword, String dob);
+    public boolean createUser(String userName, String email, String confirmEmail, char[] password, char[] confirmPassword, String dob);
 
     public Optional<User> findUserByUsername(String username);
     public Optional<User> findUserByEmail(String email);
