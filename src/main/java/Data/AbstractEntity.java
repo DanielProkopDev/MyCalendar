@@ -1,5 +1,7 @@
 package Data;
 
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 public abstract class AbstractEntity {
 
     public AbstractEntity() {
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.createdAt = LocalDateTime.now();
     }
 
     @Id
@@ -18,10 +20,10 @@ public abstract class AbstractEntity {
 
 
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "modified_at")
-    private Timestamp modifiedAt;
+    private LocalDateTime modifiedAt;
 
     // Constructors, getters, and setters
 
@@ -34,19 +36,19 @@ public abstract class AbstractEntity {
         this.id = id;
     }
 
-    public Timestamp getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getModifiedAt() {
+    public LocalDateTime getModifiedAt() {
         return modifiedAt;
     }
 
-    public void setModifiedAt(Timestamp modifiedAt) {
+    public void setModifiedAt(LocalDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
 }

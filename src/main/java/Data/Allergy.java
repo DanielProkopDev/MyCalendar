@@ -26,6 +26,14 @@ public class Allergy extends AbstractEntity {
         this.users = users;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Allergy{" +

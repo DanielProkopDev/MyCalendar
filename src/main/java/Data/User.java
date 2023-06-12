@@ -33,17 +33,17 @@ public class User extends AbstractEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "favoritemeals",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            name = "user_favoritemeals",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "favoritemeals_id")
     )
     private List<Meal> favoriteMeals;
 
     @ManyToMany
     @JoinTable(
-            name = "favoritecuisine",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            name = "user_favoritecuisine",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "favoritecuisine_id")
     )
     private List<Cuisine> favoriteCuisine;
 
@@ -51,17 +51,17 @@ public class User extends AbstractEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "allergies",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            name = "user_allergy",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "allergy_id")
     )
     private List<Allergy> allergies;
 
     @ManyToMany
     @JoinTable(
-            name = "mealstodate",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            name = "user_mealstodate",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "mealstodate_id")
     )
     private List<Meal> mealsToDate;
 
