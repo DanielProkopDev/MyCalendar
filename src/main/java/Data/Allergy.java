@@ -16,6 +16,13 @@ public class Allergy extends AbstractEntity {
     @ManyToMany(mappedBy = "allergies")
     private List<User> users;
 
+    @ManyToMany(mappedBy = "allergies")
+    private List<Diet> diets;
+
+    @ManyToMany(mappedBy = "mealsAllergy")
+    private List<Meals> meals;
+
+
     // ... getters and setters ...
 
     public List<User> getUsers() {
@@ -32,6 +39,14 @@ public class Allergy extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Diet> getDiets() {
+        return diets;
+    }
+
+    public void setDiets(List<Diet> diets) {
+        this.diets = diets;
     }
 
     @Override

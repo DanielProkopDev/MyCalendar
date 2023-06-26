@@ -1,66 +1,107 @@
 package Data;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
-public class Day {
+@Entity
+@Table(name="Day")
+public class Day extends AbstractEntity{
+    @Column(name="yearDate")
+    private Integer yearDate;
+   @Column(name="monthDate")
+   private  Integer monthDate;
+   @Column(name="dayDate")
+   private Integer dayDate;
+    @Column(name="dayText")
+    private String dayText;
 
-    private LocalDate yearDate;
 
-   private  LocalDate monthDate;
+    @ManyToMany
+    @JoinTable(
+            name = "user_day",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "day_id")
+    )
+    private List<User> users;
 
-   private LocalDate dayDate;
+    @ManyToMany
+    @JoinTable(
+            name = "day_meals",
+            joinColumns = @JoinColumn(name = "day_id"),
+            inverseJoinColumns = @JoinColumn(name = "meals_id")
+    )
+    private List<Meals> meals ;
 
-    private String dietText;
 
-    private String mealOfTheDay;
-
-    private String generatedMeal;
-
-    public LocalDate getYearDate() {
-        return yearDate;
-    }
-
-    public void setYearDate(LocalDate yearDate) {
-        this.yearDate = yearDate;
-    }
-
-    public LocalDate getMonthDate() {
-        return monthDate;
-    }
-
-    public void setMonthDate(LocalDate monthDate) {
-        this.monthDate = monthDate;
-    }
-
-    public LocalDate getDayDate() {
-        return dayDate;
-    }
-
-    public void setDayDate(LocalDate dayDate) {
-        this.dayDate = dayDate;
-    }
 
     public String getDietText() {
-        return dietText;
+        return dayText;
     }
 
     public void setDietText(String dietText) {
-        this.dietText = dietText;
+        this.dayText = dietText;
     }
 
-    public String getMealOfTheDay() {
-        return mealOfTheDay;
+    public Integer getYearDate() {
+        return yearDate;
     }
 
-    public void setMealOfTheDay(String mealOfTheDay) {
-        this.mealOfTheDay = mealOfTheDay;
+    public void setYearDate(Integer yearDate) {
+        this.yearDate = yearDate;
     }
 
-    public String getGeneratedMeal() {
-        return generatedMeal;
+    public Integer getMonthDate() {
+        return monthDate;
     }
 
-    public void setGeneratedMeal(String generatedMeal) {
-        this.generatedMeal = generatedMeal;
+    public void setMonthDate(Integer monthDate) {
+        this.monthDate = monthDate;
     }
+
+    public Integer getDayDate() {
+        return dayDate;
+    }
+
+    public void setDayDate(Integer dayDate) {
+        this.dayDate = dayDate;
+    }
+
+    public String getDayText() {
+        return dayText;
+    }
+
+    public void setDayText(String dayText) {
+        this.dayText = dayText;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Meals> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meals> meals) {
+        this.meals = meals;
+    }
+
+    @Override
+    public String toString() {
+        return "Day{" +
+                "yearDate=" + yearDate +
+                ", monthDate=" + monthDate +
+                ", dayDate=" + dayDate +
+                ", dayText='" + dayText + '\'' +
+                ", users=" + users +
+                ", meals=" + meals +
+                '}';
+    }
+
+
 }

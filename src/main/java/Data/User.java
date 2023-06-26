@@ -5,6 +5,7 @@ import Utils.Allergies;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,9 +16,6 @@ public class User extends AbstractEntity {
     @Column(name = "current_location")
     private Locale currentLocation;
 
-    @Column(name = "current_diet")
-    private boolean currentDiet;
-
 
     @Column(name = "username")
     private String userName;
@@ -26,7 +24,7 @@ public class User extends AbstractEntity {
     private String email;
 
     @Column(name = "password")
-    private char[] password;
+    private char[]  password;
 
     @Column(name = "dob")
     private LocalDate doB;
@@ -38,6 +36,14 @@ public class User extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "favoritemeals_id")
     )
     private List<Meal> favoriteMeals;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_diet",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "diet_id")
+    )
+    private List<Diet> diets;
 
     @ManyToMany
     @JoinTable(
@@ -65,6 +71,10 @@ public class User extends AbstractEntity {
     )
     private List<Meal> mealsToDate;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Day> daysList;
+
+
     public User() {
         this.currentLocation = Locale.getDefault();
     }
@@ -85,7 +95,7 @@ public class User extends AbstractEntity {
     }
 
     public void setFavoriteMeals(List<Meal> favoriteMeals) {
-        this.favoriteMeals = favoriteMeals;
+        this.favoriteMeals =  favoriteMeals;
     }
 
     public List<Cuisine> getFavoriteCuisine() {
@@ -96,13 +106,6 @@ public class User extends AbstractEntity {
         this.favoriteCuisine = favoriteCuisine;
     }
 
-    public boolean isCurrentDiet() {
-        return currentDiet;
-    }
-
-    public void setCurrentDiet(boolean currentDiet) {
-        this.currentDiet = currentDiet;
-    }
 
     public List<Allergy> getAllergies() {
         return allergies;
@@ -152,13 +155,28 @@ public class User extends AbstractEntity {
         this.doB = doB;
     }
 
+    public List<Diet> getDiets() {
+        return diets;
+    }
+
+    public void setDiets(List<Diet> diets) {
+        this.diets = diets;
+    }
+
+    public List<Day> getDays() {
+        return daysList;
+    }
+
+    public void setDays(List<Day> days) {
+        this.daysList = days;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "currentLocation=" + currentLocation +
                 ", favoriteMeals=" + favoriteMeals +
                 ", favoriteCuisine=" + favoriteCuisine +
-                ", currentDiet=" + currentDiet +
                 ", allergies='" + allergies + '\'' +
                 ", mealsToDate=" + mealsToDate +
                 ", username=" + getUserName() +

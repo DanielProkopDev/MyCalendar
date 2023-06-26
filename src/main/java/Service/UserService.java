@@ -5,10 +5,7 @@ import Data.Cuisine;
 import Data.Meal;
 import Data.User;
 import Repo.UserRepository;
-import Utils.Allergies;
-import Utils.Hash;
-import Utils.HibernateUtil;
-import Utils.SaltHash;
+import Utils.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -24,12 +21,16 @@ public class UserService implements UserRepository {
 
     SaltHash saltHash = new SaltHash();
     Hash hash = new Hash();
+
+    CompareChar compareChar = new CompareChar();
     private SessionFactory sessionFactory= HibernateUtil.getSessionFactory();
 
 
 
     public boolean createUser(String userName, String email, String confirmEmail, char[] password, char[] confirmPassword, String dob) {
-        if (email.equals(confirmEmail) && password.equals(confirmPassword)) {
+
+        System.out.println(compareChar.compareCharArrays(password,confirmPassword));
+        if (email.equals(confirmEmail) && compareChar.compareCharArrays(password,confirmPassword)) {
             try (Session session = sessionFactory.openSession()) {
                 Transaction transaction = session.beginTransaction();
 

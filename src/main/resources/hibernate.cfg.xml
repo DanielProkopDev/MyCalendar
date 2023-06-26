@@ -21,5 +21,8 @@
         <mapping class="Data.Cuisine"/>
         <mapping class="Data.FavoriteMeals"/>
         <mapping class="Data.Meal"/>
+        <mapping class="Data.Diet"/>
+        <mapping class="Data.Day"/>
+        <mapping class="Data.Meals"/>
     </session-factory>
 </hibernate-configuration>
