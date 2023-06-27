@@ -1,9 +1,6 @@
 package Repo;
 
-import Data.Cuisine;
-import Data.Meal;
-import Data.User;
-import Data.Allergy;
+import Data.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +32,10 @@ public interface UserRepository {
     public boolean updateMealsToDate(int userId, List<Meal> newMealsToDate);
 
     public boolean updateAllergies(int userId, List<Allergy> newAllergies);
+
+    public boolean delete(int userId);
+
+    List<User> getAllUsers();
 
 
 }

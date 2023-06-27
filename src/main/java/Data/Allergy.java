@@ -49,6 +49,14 @@ public class Allergy extends AbstractEntity {
         this.diets = diets;
     }
 
+    public List<Meals> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meals> meals) {
+        this.meals = meals;
+    }
+
     @Override
     public String toString() {
         return "Allergy{" +

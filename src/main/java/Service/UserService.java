@@ -1,9 +1,7 @@
 package Service;
 
-import Data.Allergy;
+import Data.*;
 import Data.Cuisine;
-import Data.Meal;
-import Data.User;
 import Repo.UserRepository;
 import Utils.*;
 import org.hibernate.Session;
@@ -11,11 +9,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
 
 public class UserService implements UserRepository {
 
@@ -23,7 +25,16 @@ public class UserService implements UserRepository {
     Hash hash = new Hash();
 
     CompareChar compareChar = new CompareChar();
-    private SessionFactory sessionFactory= HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
+
+
+    public UserService(){
+        new UserService(HibernateUtil.getSessionFactory());
+    }
+
+    public UserService(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
 
 
@@ -246,6 +257,35 @@ public class UserService implements UserRepository {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean delete(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            User user = session.get(User.class, userId);
+            if (user != null){
+                session.delete(user);
+                transaction.commit();
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<User> query = builder.createQuery(User.class);
+            Root<User> root = query.from(User.class);
+            query.select(root);
+
+            return session.createQuery(query).getResultList();
+        }
     }
 }
 

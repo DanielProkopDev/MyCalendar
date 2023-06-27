@@ -16,6 +16,9 @@ public class Meal extends AbstractEntity {
     @ManyToMany(mappedBy = "mealsToDate")
     private List<User> users;
 
+    @ManyToMany(mappedBy = "mealsToDate")
+    private List<Meals> meals;
+
 
 
     // ... getters and setters ...
@@ -26,6 +29,22 @@ public class Meal extends AbstractEntity {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Meals> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meals> meals) {
+        this.meals = meals;
     }
 
     @Override

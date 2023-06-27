@@ -32,6 +32,15 @@ public class Meals extends AbstractEntity{
     )
     private List<Diet> diets;
 
+    @ManyToMany
+    @JoinTable(
+            name = "mealstodate_meals",
+            joinColumns = @JoinColumn(name = "meals_id"),
+            inverseJoinColumns = @JoinColumn(name = "mealstodate_id")
+    )
+    private List<Meal> mealsToDate;
+
+
     @ManyToMany(mappedBy = "meals")
     private List<Day> days;
 
@@ -103,6 +112,22 @@ public class Meals extends AbstractEntity{
 
     public void setDays(List<Day> days) {
         this.days = days;
+    }
+
+    public String getCookMethod() {
+        return cookMethod;
+    }
+
+    public void setCookMethod(String cookMethod) {
+        this.cookMethod = cookMethod;
+    }
+
+    public List<Meal> getMealsToDate() {
+        return mealsToDate;
+    }
+
+    public void setMealsToDate(List<Meal> mealsToDate) {
+        this.mealsToDate = mealsToDate;
     }
 
     @Override

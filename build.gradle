@@ -17,6 +17,15 @@ dependencies {
 
     implementation 'org.postgresql:postgresql:42.6.0'
 
+    // JUnit 5 dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+    // Mockito dependency
+    testImplementation 'org.mockito:mockito-core:4.1.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.1.0'
+}
+
     // Set the main class for the application
     mainClassName = 'Main'
 
@@ -48,4 +57,7 @@ dependencies {
     }
     // Set the task dependency
     jar.dependsOn setMainClass
-}
+
+    test {
+        useJUnitPlatform()
+    }
