@@ -24,24 +24,51 @@ public class UserService implements UserRepository {
     SaltHash saltHash = new SaltHash();
     Hash hash = new Hash();
 
+    EmailValidator emailValidator = new EmailValidator();
+
     CompareChar compareChar = new CompareChar();
+
+    private static UserService instance;
     private SessionFactory sessionFactory;
 
 
-    public UserService(){
-        new UserService(HibernateUtil.getSessionFactory());
+    private UserService(){
+        this.sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    public UserService(SessionFactory sessionFactory) {
+    private UserService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+
+    public static UserService getInstance() {
+        if (instance == null) {
+            synchronized (UserService.class) {
+                if (instance == null) {
+                    instance = new UserService();
+                }
+            }
+        }
+        return instance;
+    }
+    public static UserService getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            synchronized (UserService.class) {
+                if (instance == null) {
+                    instance = new UserService(sessionFactory);
+                }
+            }
+        }
+        return instance;
+    }
+
 
 
 
     public boolean createUser(String userName, String email, String confirmEmail, char[] password, char[] confirmPassword, String dob) {
 
         System.out.println(compareChar.compareCharArrays(password,confirmPassword));
-        if (email.equals(confirmEmail) && compareChar.compareCharArrays(password,confirmPassword)) {
+        if (email.equals(confirmEmail) && password.length > 0 && compareChar.compareCharArrays(password,confirmPassword) && emailValidator.isValidEmail(email)) {
             try (Session session = sessionFactory.openSession()) {
                 Transaction transaction = session.beginTransaction();
 
@@ -53,6 +80,8 @@ public class UserService implements UserRepository {
                 user.setUserName(userName);
                 user.setEmail(email);
                 user.setPassword(securePassword.get());
+                user.setSalt(salt.get());
+                System.out.println(salt.get());
                 user.setDoB(LocalDate.parse(dob));
 
                 session.save(user);
@@ -62,7 +91,7 @@ public class UserService implements UserRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (userName.isEmpty() || email.isEmpty() || password.length == 0) {
+        } else if (userName.isEmpty() || email.isEmpty() || password.length == 0 || !emailValidator.isValidEmail(email)) {
             return false;
         } else {
             return false;
@@ -85,14 +114,17 @@ public class UserService implements UserRepository {
     }
 
     public Optional<User> findUserByEmail(String email) {
-        try (Session session = sessionFactory.openSession()) {
-            String query = "FROM User WHERE email = :email";
-            return session.createQuery(query, User.class)
-                    .setParameter("email", email)
-                    .uniqueResultOptional();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            try (Session session = sessionFactory.openSession()) {
+                String query = "FROM User WHERE email = :email";
+
+                return session.createQuery(query, User.class)
+                        .setParameter("email", email)
+                        .uniqueResultOptional();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         return Optional.empty();
     }

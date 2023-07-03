@@ -26,6 +26,9 @@ public class User extends AbstractEntity {
     @Column(name = "password")
     private char[]  password;
 
+    @Column(name = "salt")
+    private String salt;
+
     @Column(name = "dob")
     private LocalDate doB;
 
@@ -169,6 +172,22 @@ public class User extends AbstractEntity {
 
     public void setDays(List<Day> days) {
         this.daysList = days;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public List<Day> getDaysList() {
+        return daysList;
+    }
+
+    public void setDaysList(List<Day> daysList) {
+        this.daysList = daysList;
     }
 
     @Override

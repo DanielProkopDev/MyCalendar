@@ -9,7 +9,10 @@ public class LoginFrame extends JFrame {
     private JTextField emailTextField;
     private JTextField passwordTextField;
 
-    public LoginFrame() {
+    private StartView1 startView1;
+
+    public LoginFrame(StartView1 startView1) {
+        this.startView1 = startView1;
         setTitle("Log In");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 250);
@@ -29,9 +32,11 @@ public class LoginFrame extends JFrame {
         JLabel emailLabel = new JLabel("E-mail:");
         emailTextField = new JTextField();
         JLabel passwordLabel = new JLabel("Password:");
-        passwordTextField = new JTextField();
+        passwordTextField = new JPasswordField();
 
         JButton submit = new JButton("Submit");
+
+        submit.addMouseListener(new LoginSubmitListener( this,startView1));
 
         emailTextField.setPreferredSize(new Dimension(300, 25)); // Adjust the width and height of the text fields
         passwordTextField.setPreferredSize(new Dimension(300, 25));

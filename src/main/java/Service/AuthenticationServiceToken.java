@@ -2,6 +2,7 @@ package Service;
 
 import Data.User;
 import Utils.AccessLevels;
+import Service.auth.AuthenticationTokenFactory;
 
 public class AuthenticationServiceToken {
     private final User user;
@@ -59,4 +60,6 @@ public class AuthenticationServiceToken {
     private void setInstance(AuthenticationServiceToken instance) {
         this.instance = instance;
     }
+
+
 }

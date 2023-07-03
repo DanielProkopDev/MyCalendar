@@ -1,6 +1,7 @@
 package GUI;
 
 import Service.UserService;
+import Utils.EmailValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,8 @@ import java.awt.event.MouseEvent;
 
 public class CreateAccountFrame extends JFrame {
 
-   UserService userService = new UserService();
+   UserService userService = UserService.getInstance();
+
     public CreateAccountFrame() {
         setTitle("Create an Account");
         setSize(400, 350);
@@ -47,7 +49,7 @@ public class CreateAccountFrame extends JFrame {
                 if (userService.createUser(usernameTextField.getText(),emailTextField.getText(),confirmEmailTextField.getText(),passwordTextField.getText().toCharArray(),confirmPasswordTextField.getText().toCharArray(),dobTextField.getText())) {
                     JOptionPane.showMessageDialog(CreateAccountFrame.this,"Account Created");
                 }else {
-                    JOptionPane.showMessageDialog(CreateAccountFrame.this,"Password or Email isn't confirmed");
+                    JOptionPane.showMessageDialog(CreateAccountFrame.this,"Password or Email isn't confirmed or correct");
                 }
             }
         });

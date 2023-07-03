@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
 
     int yearNow= LocalDate.now().getYear();
 
-    HibernateUtil hibernateUtil = new HibernateUtil();
+   // HibernateUtil hibernateUtil = new HibernateUtil();
 
     public MainFrame() {
         createUI();
@@ -57,7 +57,7 @@ public class MainFrame extends JFrame {
     }
 
     private JPanel createStartView() {
-        StartView startView = new StartView();
+        StartView1 startView = new StartView1();
        /* JPanel startView = new JPanel();
         JLabel startLabel = new JLabel("Welcome to the Start View");
         startLabel.setFont(new Font("Arial", Font.BOLD, 24));
