@@ -3,6 +3,7 @@ package Service;
 import Data.FavoriteMeals;
 import Data.User;
 import Repo.FavoriteMealsRepository;
+import Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,11 +15,38 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class FavoriteMealsService implements FavoriteMealsRepository {
+
+    private static FavoriteMealsService instance;
     private SessionFactory sessionFactory;
 
-    public FavoriteMealsService(SessionFactory sessionFactory) {
+    private FavoriteMealsService(){
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+    private FavoriteMealsService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    public static FavoriteMealsService getInstance() {
+        if (instance == null) {
+            synchronized (FavoriteMealsService.class) {
+                if (instance == null) {
+                    instance = new FavoriteMealsService();
+                }
+            }
+        }
+        return instance;
+    }
+    public static FavoriteMealsService getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            synchronized (FavoriteMealsService.class) {
+                if (instance == null) {
+                    instance = new FavoriteMealsService(sessionFactory);
+                }
+            }
+        }
+        return instance;
+    }
+
 
     @Override
     public FavoriteMeals findById(Integer id) {

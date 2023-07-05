@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="UserServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-07-03T15:05:38" hostname="DANNYBOY" time="0.605">
-  <properties/>
-  <testcase name="testFindUserByEmail_UserExists()" classname="UserServiceTest" time="0.605"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

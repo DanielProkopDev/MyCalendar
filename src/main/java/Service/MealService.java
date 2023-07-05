@@ -3,6 +3,7 @@ package Service;
 import Data.Meal;
 import Data.User;
 import Repo.MealRepository;
+import Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,10 +15,37 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class MealService implements MealRepository {
+
+    private static MealService instance;
     private SessionFactory sessionFactory;
 
-    public MealService(SessionFactory sessionFactory) {
+    private MealService(){
+        this.sessionFactory= HibernateUtil.getSessionFactory();
+    }
+
+    private MealService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public static MealService getInstance() {
+        if (instance == null) {
+            synchronized (MealService.class) {
+                if (instance == null) {
+                    instance = new MealService();
+                }
+            }
+        }
+        return instance;
+    }
+    public static MealService getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            synchronized (MealService.class) {
+                if (instance == null) {
+                    instance = new MealService(sessionFactory);
+                }
+            }
+        }
+        return instance;
     }
 
     @Override

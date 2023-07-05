@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -618,6 +619,87 @@ public class UserServiceTest {
         verify(session, times(1)).get(User.class, userId);
         verify(transaction, never()).commit();
         verify(session, times(1)).close();
+    }
+
+
+    @Test
+    public void testUpdateBudget_Success() {
+        int userId = 1;
+        BigDecimal newBudget = new BigDecimal("1000.00");
+
+        User user = new User();
+        user.setId(userId);
+        user.setBudget(new BigDecimal("500.00"));
+
+        when(session.get(User.class, userId)).thenReturn(user);
+
+        boolean result = userService.updateBudget(userId, newBudget);
+
+        assertTrue(result);
+        assertEquals(newBudget, user.getBudget());
+
+        verify(session).get(User.class, userId);
+        verify(session).update(user);
+        verify(transaction).commit();
+    }
+
+    @Test
+    public void testUpdateBudget_UserNotFound() {
+        int userId = 1;
+        BigDecimal newBudget = new BigDecimal("1000.00");
+
+        when(session.get(User.class, userId)).thenReturn(null);
+
+        boolean result = userService.updateBudget(userId, newBudget);
+
+        assertFalse(result);
+
+        verify(session).get(User.class, userId);
+        verify(session, never()).update(any(User.class));
+        verify(transaction, never()).commit();
+    }
+
+    @Test
+    public void testUpdateDays_Success() {
+        int userId = 1;
+
+        User user = new User();
+        user.setId(userId);
+        user.setDaysList(new ArrayList<>());
+
+        List<Day> newDayList = new ArrayList<>();
+        newDayList.add(new Day(2023,06,01));
+        newDayList.add(new Day(2023,06,02));
+
+        when(session.get(User.class, userId)).thenReturn(user);
+
+        boolean result = userService.updateDays(userId, newDayList);
+
+        assertTrue(result);
+        assertEquals(newDayList, user.getDaysList());
+
+        verify(session).get(User.class, userId);
+        verify(session).update(user);
+        verify(transaction).commit();
+    }
+
+    @Test
+    public void testUpdateDays_UserNotFound() {
+        int userId = 1;
+
+        List<Day> newDayList = new ArrayList<>();
+        newDayList.add(new Day(2023,06,01));
+        newDayList.add(new Day(2023,06,02));
+
+        when(session.get(User.class, userId)).thenReturn(null);
+
+        boolean result = userService.updateDays(userId, newDayList);
+
+        assertFalse(result);
+
+        verify(session).get(User.class, userId);
+        verify(session, never()).update(any(User.class));
+        verify(transaction, never()).commit();
     }
 
     private <T> TypedQuery<T> mockTypedQuery(Class<T> clazz) {

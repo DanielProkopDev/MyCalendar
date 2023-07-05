@@ -3,6 +3,7 @@ package Data;
 import Utils.Allergies;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,6 +32,9 @@ public class User extends AbstractEntity {
 
     @Column(name = "dob")
     private LocalDate doB;
+
+    @Column(name="budget")
+    private BigDecimal budget;
 
     @ManyToMany
     @JoinTable(
@@ -166,13 +170,6 @@ public class User extends AbstractEntity {
         this.diets = diets;
     }
 
-    public List<Day> getDays() {
-        return daysList;
-    }
-
-    public void setDays(List<Day> days) {
-        this.daysList = days;
-    }
 
     public String getSalt() {
         return salt;
@@ -188,6 +185,14 @@ public class User extends AbstractEntity {
 
     public void setDaysList(List<Day> daysList) {
         this.daysList = daysList;
+    }
+
+    public BigDecimal getBudget() {
+        return budget;
+    }
+
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
     }
 
     @Override

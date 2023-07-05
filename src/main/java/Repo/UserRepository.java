@@ -2,6 +2,7 @@ package Repo;
 
 import Data.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,10 @@ public interface UserRepository {
     public boolean updateMealsToDate(int userId, List<Meal> newMealsToDate);
 
     public boolean updateAllergies(int userId, List<Allergy> newAllergies);
+
+    public boolean updateBudget(int userId, BigDecimal budget);
+
+    public boolean updateDays(int userId,List<Day> dayList);
 
     public boolean delete(int userId);
 

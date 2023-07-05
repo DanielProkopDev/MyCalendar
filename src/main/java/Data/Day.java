@@ -1,18 +1,17 @@
 package Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="Day")
+@Table(name= "day")
 public class Day extends AbstractEntity{
-    @Column(name="yearDate")
+    @Column(name= "yeardate")
     private Integer yearDate;
-   @Column(name="monthDate")
-   private  Integer monthDate;
-   @Column(name="dayDate")
-   private Integer dayDate;
+    @Column(name= "monthdate")
+    private  Integer monthDate;
+    @Column(name= "daydate")
+    private Integer dayDate;
     @Column(name="dayText")
     private String dayText;
 
@@ -34,6 +33,15 @@ public class Day extends AbstractEntity{
     private List<Meals> meals ;
 
 
+    public Day (Integer year, Integer month, Integer day){
+        this.yearDate = year;
+        this.monthDate = month;
+        this.dayDate = day;
+    }
+
+    public Day() {
+
+    }
 
     public String getDietText() {
         return dayText;
@@ -97,9 +105,7 @@ public class Day extends AbstractEntity{
                 "yearDate=" + yearDate +
                 ", monthDate=" + monthDate +
                 ", dayDate=" + dayDate +
-                ", dayText='" + dayText + '\'' +
-                ", users=" + users +
-                ", meals=" + meals +
+                ", dayText='" + dayText + '\''  +
                 '}';
     }
 

@@ -5,6 +5,7 @@ import Data.Diet;
 import Data.Meals;
 import Data.User;
 import Repo.AllergyRepository;
+import Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -15,10 +16,37 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class AllergyService implements AllergyRepository {
+
+    private static AllergyService instance;
     private SessionFactory sessionFactory;
 
-    public AllergyService(SessionFactory sessionFactory) {
+    private AllergyService(){
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+
+    private AllergyService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public static AllergyService getInstance() {
+        if (instance == null) {
+            synchronized (AllergyService.class) {
+                if (instance == null) {
+                    instance = new AllergyService();
+                }
+            }
+        }
+        return instance;
+    }
+    public static AllergyService getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            synchronized (AllergyService.class) {
+                if (instance == null) {
+                    instance = new AllergyService(sessionFactory);
+                }
+            }
+        }
+        return instance;
     }
 
     @Override

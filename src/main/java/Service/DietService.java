@@ -4,6 +4,7 @@ import Data.Allergy;
 import Data.Diet;
 import Data.User;
 import Repo.DietRepository;
+import Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,12 +16,38 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class DietService implements DietRepository {
+
+    private static DietService instance;
     private SessionFactory sessionFactory;
 
-    public DietService(SessionFactory sessionFactory) {
+    private DietService(){
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+    private DietService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+
+    public static DietService getInstance() {
+        if (instance == null) {
+            synchronized (DietService.class) {
+                if (instance == null) {
+                    instance = new DietService();
+                }
+            }
+        }
+        return instance;
+    }
+    public static DietService getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            synchronized (DietService.class) {
+                if (instance == null) {
+                    instance = new DietService(sessionFactory);
+                }
+            }
+        }
+        return instance;
+    }
     @Override
     public Diet findById(Integer id) {
         try (Session session = sessionFactory.openSession()) {

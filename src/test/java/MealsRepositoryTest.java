@@ -67,7 +67,7 @@ public class MealsRepositoryTest {
         when(session.get(Meals.class, mealId)).thenReturn(expectedMeal);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         Meals actualMeal = mealsService.findById(mealId);
 
         // Verify
@@ -95,7 +95,7 @@ public class MealsRepositoryTest {
         when(query.getResultList()).thenReturn(expectedMeals);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         List<Meals> actualMeals = mealsService.findAll();
 
         // Verify
@@ -122,7 +122,7 @@ public class MealsRepositoryTest {
         when(session.beginTransaction()).thenReturn(transaction); // Return the mock Transaction object
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         mealsService.save(meals);
 
         // Verify
@@ -142,7 +142,7 @@ public class MealsRepositoryTest {
         when(session.beginTransaction()).thenReturn(transaction);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         mealsService.update(meals);
 
         // Verify
@@ -162,7 +162,7 @@ public class MealsRepositoryTest {
         when(session.beginTransaction()).thenReturn(transaction);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         mealsService.delete(meals);
 
         // Verify
@@ -195,7 +195,7 @@ public class MealsRepositoryTest {
         when(query.getResultList()).thenReturn(expectedMeals);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         List<Meals> actualMeals = mealsService.findByAllergy(allergy);
 
         // Verify
@@ -236,7 +236,7 @@ public class MealsRepositoryTest {
         when(query.getResultList()).thenReturn(expectedMeals);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         List<Meals> actualMeals = mealsService.findByDiet(diet);
 
         // Verify
@@ -274,7 +274,7 @@ public class MealsRepositoryTest {
         when(query.getResultList()).thenReturn(expectedMeals);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         List<Meals> actualMeals = mealsService.findByDay(day);
 
         // Verify
@@ -315,7 +315,7 @@ public class MealsRepositoryTest {
         when(query.getResultList()).thenReturn(expectedMeals);
 
         // Test
-        MealsService mealsService = new MealsService(sessionFactory);
+        MealsService mealsService = MealsService.getInstance(sessionFactory);
         List<Meals> actualMeals = mealsService.findByMealsToDate(meal);
 
         // Verify

@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -319,5 +320,52 @@ public class UserService implements UserRepository {
             return session.createQuery(query).getResultList();
         }
     }
+
+    @Override
+    public boolean updateBudget(int userId, BigDecimal budget) {
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+
+            User user = session.get(User.class, userId);
+
+            if (user != null) {
+                user.setBudget(budget);
+                session.update(user);
+                transaction.commit();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exception appropriately
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateDays(int userId, List<Day> dayList) {
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+
+            User user = session.get(User.class, userId);
+
+            if (user != null) {
+                user.setDaysList(dayList);
+                session.update(user);
+                transaction.commit();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exception appropriately
+            return false;
+        }
+    }
+
 }
 
